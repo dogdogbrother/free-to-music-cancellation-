@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 module.exports = {
     entry:'./src/main.js',
+    mode:'development',
     output:{
         filename:'buld.js',
         path:path.resolve(__dirname,'dist')
@@ -14,5 +15,12 @@ module.exports = {
             }
         ),
         new CleanWebpackPlugin()
-    ]
+    ],
+    devServer:{
+        contentBase:'./dist',
+        open:true
+    },
+    optimization:{
+        usedExports:true
+    }
 }
