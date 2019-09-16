@@ -9,6 +9,7 @@
 import React from 'react'
 import Aside from './aside'
 import LayoutMain from './main'
+import { BrowserRouter, Route, Link } from 'react-router-dom'
 import Footer from './footer'
 import './style.scss'
 
@@ -19,7 +20,6 @@ const Layout = () => {
         <Aside></Aside>
         <LayoutMain></LayoutMain>
       </section>
-      
     </div>
   )
 }

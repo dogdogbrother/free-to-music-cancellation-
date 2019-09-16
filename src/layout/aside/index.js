@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom'
 import { Icon } from 'antd';
 import './style.scss'
 
-const Aside = (match)=> {
+const Aside = ()=> {
   return(
     <div className="layout-aside-box p-20">
       <h1 className="logo-module">
@@ -20,8 +20,10 @@ const Aside = (match)=> {
               </Link>
             </li>
             <li>
-              <Icon type="customer-service" />
-              <span>查看歌单</span>  
+              <Link to="/song-menu">
+                <Icon type="customer-service" />
+                <span>查看歌单</span>  
+              </Link>
             </li>
           </ul>
         </div>
