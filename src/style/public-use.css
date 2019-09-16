@@ -1,0 +1,40 @@
+/* 全局的一些常用style的class */
+
+/* flex 相关的东西 */
+.d-f-w{
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap:wrap;
+}
+.d-f{
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* padding 相关的东西 */
+.p-5{
+  padding: 5px;
+}
+.p-10{
+  padding: 10px;
+}
+.p-15{
+  padding: 15px;
+}
+.p-20{
+  padding: 20px;
+}
+
+/* margin 相关的东西 */
+.m-5{
+  margin: 5px;
+}
+.m-10{
+  margin: 10px;
+}
+.m-15{
+  margin: 15px;
+}
+.m-20{
+  margin: 20px;
+}

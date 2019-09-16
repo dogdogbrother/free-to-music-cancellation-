@@ -1,0 +1,12 @@
+.layout-box{
+  display: flex;
+  justify-content: start;
+  height: 100vh;
+  .layout-aside-box{
+    width: 200px;
+    background-color: rgba(160,160,160,0.02);
+  }
+  .layout-main-box{
+    flex: 1;
+  }
+}
