@@ -20,8 +20,21 @@
     &:hover{
       background: rgba(40, 40, 40, 0.04)
     }
+    a{
+      display: block;
+      width: 100%;
+    }
     i{
       margin: 0 10px 0 10px;
     }
+  }
+  .aside-active{
+    background-color: #31c27c;
+    i{
+      // color: #fff;
+    }
+  }
+  .aside-active:hover{
+    background-color: #31c27c;
   }
 }

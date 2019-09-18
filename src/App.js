@@ -7,6 +7,7 @@ import React from 'react';
 import LayoutBox from './layout'
 import './style/reset-style.css'
 import './style/public-use.css'
+import './style/and-style.css'
 
 function App() {
   return (

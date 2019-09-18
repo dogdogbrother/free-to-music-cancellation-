@@ -1,6 +1,6 @@
 .layout-box{
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   height: 100vh;
   .layout-aside-box{
     width: 200px;
@@ -8,5 +8,7 @@
   }
   .layout-main-box{
     flex: 1;
+    box-sizing: border-box;
+    padding: 20px;
   }
 }

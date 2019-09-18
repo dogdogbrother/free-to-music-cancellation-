@@ -9,18 +9,18 @@
 import React from 'react'
 import Aside from './aside'
 import LayoutMain from './main'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Footer from './footer'
 import './style.scss'
 
 const Layout = () => {
   return(
-    <div>
+    <Router>
       <section className="layout-box">
         <Aside></Aside>
         <LayoutMain></LayoutMain>
       </section>
-    </div>
+    </Router>
   )
 }
 export default Layout

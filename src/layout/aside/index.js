@@ -1,30 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import { Icon } from 'antd';
 import './style.scss'
 
-const Aside = ()=> {
+const Aside = ({ test })=> {
   return(
     <div className="layout-aside-box p-20">
       <h1 className="logo-module">
-        我这个页面的logo
+        <span>请登录</span>
       </h1>
-      <BrowserRouter>
         <div>
           <p className="menu-title">在线音乐</p>
           <ul>
-            <li>
-              <Link to="/">
-                <Icon type="search"/>
-                <span>搜索歌曲</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/song-menu">
-                <Icon type="customer-service" />
-                <span>查看歌单</span>  
-              </Link>
-            </li>
+            <Route
+              children={(match)=>(
+                <li className={match.location.pathname === '/' ? 'aside-active' : ''}>
+                  <Link to="/">
+                    <Icon type="search"/><span>搜索歌曲</span>
+                  </Link>
+                </li>
+              )}>
+            </Route>
+            <Route
+              children={(match)=>(
+                <li className={match.location.pathname === '/song-menu' ? 'aside-active' : ''}>
+                  <Link to="/song-menu">
+                    <Icon type="customer-service"/><span>查看歌单</span>
+                  </Link>
+                </li>
+              )}>
+            </Route>
           </ul>
         </div>
           <div>
@@ -53,7 +58,6 @@ const Aside = ()=> {
             </li>
           </ul>
         </div>
-      </BrowserRouter>
     </div>
   )
 }
