@@ -14,7 +14,14 @@ const DefaultSearchPage = ()=> {
    */
   const handlerSearch = (searchVlue,history)=> {  
     //点击搜索按钮时执行此函数,给新路由带上搜索的 search 值和 platform 值
-    history.push({ pathname:'search-result', state:{ searchVlue, platform} })
+    if (platform === 0) {
+      history.push({ pathname:'qq-search-result', state:{ searchVlue, platform }})
+    }else if(platform === 1){
+      history.push({ pathname:'wy-search-result', state:{ searchVlue, platform }})
+    }else{
+
+    }
+    
   }
   const SearchButton = withRouter(({history})=>{
     return (

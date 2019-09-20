@@ -1,0 +1,22 @@
+.wy-search-page{
+  .res-container{
+    padding: 20px;
+    .song-list{
+      border-top: 1px solid #eee;
+      .title{
+        line-height: 46px;
+        font-size: 14px;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 10px;
+      }
+      .song{
+        line-height: 34px;
+        color: #333;
+        font-size: 13px;
+        .collect-icon:hover{
+          color: #c63c26;
+        }
+      }
+    }
+  }
+}

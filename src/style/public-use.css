@@ -62,3 +62,26 @@
 .m-b-20{
   margin-bottom: 20px;
 }
+.m-r-5{
+  margin-right: 5px;
+}
+.m-r-10{
+  margin-right: 10px;
+}
+.m-r-15{
+  margin-right: 15px;
+}
+.m-r-20{
+  margin-right: 20px;
+}
+/* 省略的设置 */
+.ellipsis{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+/* 数据指针 */
+.c-p{
+  cursor: pointer;
+}
