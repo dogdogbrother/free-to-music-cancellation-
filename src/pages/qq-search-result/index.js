@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from "react-router-dom";
 import axios from 'axios'
-import { Row, Col, Icon } from 'antd'
+import { Row, Col, Icon, Tooltip } from 'antd'
 import '../../common/song-list-style.scss'
 const QQsearchResult = (props) => {
   const [songList, setSongList] = useState([]); //歌曲列表数据
   useEffect(()=>{
     let pathState = props.location.state
     axios.get(`/qpi/soso/fcgi-bin/client_search_cp?aggr=1&cr=1&flag_qc=0&p=1&n=30&w=${pathState.searchVlue}`).then(res=>{
-
       let str = res.data.slice(9)
       str = str.slice(0,str.length-1)
       let data = JSON.parse(str)
@@ -34,9 +33,19 @@ const QQsearchResult = (props) => {
               return(
                 <li className="song" key={index}>
                   <Row>
-                    <Col span={9}>
+                    <Col span={9} className="d-f">
                       <Icon type="heart" className="m-r-5 c-p collect-icon"/>
-                      <span className="m-r-5 c-p">{song.songname}</span>
+                      <div className="song-name">
+                        <span className="m-r-5 c-p ellipsis">{song.songname}</span>
+                      </div>
+                      <div className="d-f d-b-a operation-icon-box">
+                        <Tooltip title="播放" placement="bottom">
+                          <Icon type="play-circle" className="operation-icon"/>
+                        </Tooltip>
+                        <Tooltip title="添加至播放列表" placement="bottom">
+                          <Icon type="plus-circle" className="operation-icon"/>
+                        </Tooltip>
+                      </div>
                     </Col>
                     <Col span={5}>{singers(song.singer)}</Col>
                     <Col span={8}>{song.albumname || ''}</Col>

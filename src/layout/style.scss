@@ -1,7 +1,8 @@
 .layout-box{
   display: flex;
   justify-content: flex-start;
-  height: 100vh;
+  height: calc(100vh - 70px);
+  overflow: hidden;
   .layout-aside-box{
     width: 200px;
     background-color: rgba(160,160,160,0.02);
@@ -11,4 +12,7 @@
     box-sizing: border-box;
     padding: 20px;
   }
+}
+.layout-footer{
+  height: 70px;
 }

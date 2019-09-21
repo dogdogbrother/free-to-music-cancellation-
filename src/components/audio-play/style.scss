@@ -1,0 +1,51 @@
+.play-footer{
+  audio{
+    display: block;
+  }
+  background-color: rgba(160, 160, 160, 0.04);
+  height: 100%;
+  .play-footer-main{
+    .song-content{
+      height: 55;
+      margin: 5px 10px 0 10px;
+      .img-box{
+        margin-right: 10px;
+        img{
+          width: 55px;
+          height: 55px;
+        }
+      }
+      .song-info{
+        padding-top: 8px;
+        font-size: 13px;
+        .name{
+          color: #333;
+        }
+      }
+      .song-icon{
+        padding-top: 12px;
+        width: 40px;
+        font-size: 14px;
+      }
+      
+    }
+  }
+  .play-operate{
+    width: 400px;
+    .small-icon{
+      font-size: 34px;
+      margin-top: 14px;
+    }
+    .big-icon{
+      font-size: 40px;
+      margin: 10px 20px 0;
+    }
+    .small-icon,.big-icon{
+      cursor: pointer;
+      color: #666;
+      &:hover{
+        color: #444;
+      }
+    }
+  }
+}

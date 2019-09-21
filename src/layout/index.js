@@ -9,8 +9,9 @@
 import React from 'react'
 import Aside from './aside'
 import LayoutMain from './main'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import Footer from './footer'
+import AudioPlay from '../components/audio-play'
+import { BrowserRouter as Router } from 'react-router-dom'
+
 import './style.scss'
 
 const Layout = () => {
@@ -19,6 +20,9 @@ const Layout = () => {
       <section className="layout-box">
         <Aside></Aside>
         <LayoutMain></LayoutMain>
+      </section>
+      <section className="layout-footer">
+        <AudioPlay />
       </section>
     </Router>
   )

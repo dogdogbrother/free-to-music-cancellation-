@@ -10,7 +10,14 @@
   display: flex;
   justify-content: flex-start;
 }
-
+.d-f-b{
+  display: flex;
+  justify-content: space-between;
+}
+.d-b-a{
+  display: flex;
+  justify-content: space-around;
+}
 /* padding 相关的东西 */
 .p-5{
   padding: 5px;
