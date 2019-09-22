@@ -1,9 +1,13 @@
 .play-footer{
-  audio{
-    display: block;
-  }
+  position: relative;
   background-color: rgba(160, 160, 160, 0.04);
   height: 100%;
+  audio{
+    display: block;
+    &:focus{
+      outline: none;
+    }
+  }
   .play-footer-main{
     .song-content{
       height: 55;
@@ -50,12 +54,30 @@
     }
   }
   .inventory{
-    padding-left: 140px;
-    margin: 20px 40px 0 0;
+    color: #333;
+    padding-left: 120px;
+    margin: 18px 40px 0 0;
     font-size: 18px;
     line-height: 36px;
   }
   .menu-unfold{
     margin: 10px 5px;
+  }
+  .play-list-box{
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 400px;
+    width: 400px;
+    opacity: 0.9;
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 14px;
+    .play-list-box-title{
+      line-height: 28px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
   }
 }

@@ -21,9 +21,12 @@ export const playList = new BehaviorSubject([])
 
 export const pushPlayList = (obj)=>{
   //其实push进来应该有别的操作,例如检查这个歌曲是否已经在列表中了,没有的话再添加
-  console.log('我想知道有没有添加动作',obj);
-  
   let list = playList.value
   playList.next([...list,obj])
+}
+
+export const deletePlayList = (index)=>{
+  playList.value.splice(index,1)
+  playList.next([...playList.value])
 }
 

@@ -1,23 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Icon } from 'antd'
-import { useObservable } from 'rxjs-hooks';
-import { currentPlay,setCurrentPlay, playList } from '../../rxStore/playRx'
+import { useObservable } from 'rxjs-hooks'
+import { currentPlay, setCurrentPlay, playList, deletePlayList } from '../../rxStore/playRx'
 import './style.scss'
 
-// 这个组件现在还在思索中,到底应该怎么写
-// 先把布局写一下吧 首先他分上下两段,上面那段是进度条,下面是主要的区域内容
 const AudioPlay = ()=>{
   let play = useObservable(() => currentPlay.asObservable()) || currentPlay.value
   let pList = useObservable(() => playList.asObservable()) || playList.value
+  const [showListBox, setShowListBox] = useState(false)
   const nextPlay = (id)=> { 
     //点击下一曲和自动播放完了就执行这个函数,首先判断下当前曲目的位置,然后下一曲或是回到第一首,给setCurrentPlay赋值即可
     //事实上这里还有单曲循环啥的很多操作,暂时简化一点
     playList.value.forEach((item,index)=>{
       if (item.id === id) {
         if (index === playList.value.length-1) {
-          setCurrentPlay(playList.value[0])
+          setCurrentPlay(pList[0])
         }else{
-          setCurrentPlay(playList.value[index+1])
+          setCurrentPlay(pList[index+1])
         }
       }
     })
@@ -30,12 +29,53 @@ const AudioPlay = ()=>{
         }else{
           setCurrentPlay(playList.value[index-1])
         }
-      }
-      
+      } 
     })
+  }
+  const deleteSongListItem = (id,index) => {
+    if (playList.value.length===1) {
+      setCurrentPlay({
+        url:'',
+        img:'',
+        name:'',
+        art:'',
+        id:''
+      })
+    }else{
+      nextPlay(id)
+    }
+    deletePlayList(index)
+  }
+  const isShowSongList = () => {
+    setShowListBox(!showListBox)
+  }
+  const playListSong = (song) => {
+    setCurrentPlay(song)
   }
   return (
     <div className="play-footer">
+      {/* 我在这个地方暂时插个东西,就是播放列表,样式上我还没想好,先随便写写 */}
+      { showListBox && 
+        <div className="play-list-box">
+          <div className="play-list-box-title">我是头部,播放列表</div>
+          <ul>
+            { 
+              pList.map((item,index)=>{
+                return(
+                  <li key={item.id} className="m-b-5">
+                    <span className="c-p m-r-5" onClick={()=>{playListSong(item)}}>{item.name}</span>
+                    {
+                      item.id === play.id &&
+                      <Icon type="play-circle" className="m-r-5"/>
+                    }
+                    <Icon type="delete" onClick={()=>{deleteSongListItem(item.id,index)}}/>
+                  </li>
+                )
+              })
+            }
+          </ul>
+        </div>
+      }
       <div className="play-footer-main d-f-b">
         <div className="song-content d-f">
           <div className="img-box">
@@ -69,7 +109,7 @@ const AudioPlay = ()=>{
         </div>
 
         <div>
-          <div className="d-f inventory c-p">
+          <div className="d-f inventory c-p" onClick={()=>{isShowSongList()}}>
             <span>列表</span>
             <Icon type="menu-unfold" className="menu-unfold"/>
             <span>{pList.length}</span>
