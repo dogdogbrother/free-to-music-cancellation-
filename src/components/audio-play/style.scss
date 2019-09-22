@@ -31,6 +31,7 @@
     }
   }
   .play-operate{
+    margin: 7px 0 0 0;
     width: 400px;
     .small-icon{
       font-size: 34px;
@@ -47,5 +48,14 @@
         color: #444;
       }
     }
+  }
+  .inventory{
+    padding-left: 140px;
+    margin: 20px 40px 0 0;
+    font-size: 18px;
+    line-height: 36px;
+  }
+  .menu-unfold{
+    margin: 10px 5px;
   }
 }

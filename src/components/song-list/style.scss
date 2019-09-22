@@ -1,0 +1,40 @@
+
+.song-list{
+  .title{
+    line-height: 46px;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+  }s
+  .song{
+    line-height: 34px;
+    color: #333;
+    font-size: 13px;
+    &:hover .operation-icon{
+      display: block;
+    }
+    .song-name{
+      flex: 1;
+    }
+    .collect-icon{
+      line-height: 34px;
+    }
+    .collect-icon:hover{
+      color: #31c27c;
+    }
+    .operation-icon-box{
+      width: 78px;
+      font-size: 18px;
+      padding-right: 20px;
+    }
+    .operation-icon{
+      display: none;
+      position: relative;
+      top: 9px;
+      cursor: pointer;
+      &:hover{
+        color: #31c27c;
+      }
+    }
+  }
+}

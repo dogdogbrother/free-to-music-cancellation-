@@ -1,10 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Icon } from 'antd'
+import { useObservable } from 'rxjs-hooks';
+import { currentPlay,setCurrentPlay, playList } from '../../rxStore/playRx'
 import './style.scss'
 
 // 这个组件现在还在思索中,到底应该怎么写
 // 先把布局写一下吧 首先他分上下两段,上面那段是进度条,下面是主要的区域内容
-const AudioPlay = ({url})=>{
+const AudioPlay = ()=>{
+  let play = useObservable(() => currentPlay.asObservable()) || currentPlay.value
+  let pList = useObservable(() => playList.asObservable()) || playList.value
+  const nextPlay = (id)=> { 
+    //点击下一曲和自动播放完了就执行这个函数,首先判断下当前曲目的位置,然后下一曲或是回到第一首,给setCurrentPlay赋值即可
+    //事实上这里还有单曲循环啥的很多操作,暂时简化一点
+    playList.value.forEach((item,index)=>{
+      if (item.id === id) {
+        if (index === playList.value.length-1) {
+          setCurrentPlay(playList.value[0])
+        }else{
+          setCurrentPlay(playList.value[index+1])
+        }
+      }
+    })
+  }
+  const lastPlay = (id) => {
+    playList.value.forEach((item,index)=>{
+      if (item.id === id) {
+        if (index === 0) {
+          alert('已经是第一首了,上一首上不动了')
+        }else{
+          setCurrentPlay(playList.value[index-1])
+        }
+      }
+      
+    })
+  }
   return (
     <div className="play-footer">
       <div className="play-footer-main d-f-b">
@@ -14,9 +43,9 @@ const AudioPlay = ({url})=>{
           </div>
           <div className="song-info">
             <p className="info">
-              <span className="name">一路向北</span>
+              <span className="name">{play.name}</span>
               <span> - </span>
-              <span>周杰伦</span>
+              <span>{play.art}</span>
             </p>
             <div className="song-icon d-f-b">
               <Icon type="heart" />
@@ -25,22 +54,28 @@ const AudioPlay = ({url})=>{
           </div>
         </div>
         <div className="play-operate d-f">
-          <div className="small-icon">
-            <Icon type="fast-backward" />
-          </div>
           <audio 
+            className="m-r-10"
             controls="controls"
-            src="http://m10.music.126.net/20190921171649/531f50c258d0c87fa87c25daf1ba3821/ymusic/0fd6/4f65/43ed/a8772889f38dfcb91c04da915b301617.mp3"/>
+            autoPlay="autoPlay"
+            onEnded={()=>{nextPlay(play.id)}}
+            src={play.url}/>
+          <div className="small-icon m-r-10">
+            <Icon type="fast-backward" onClick={()=>{lastPlay(play.id)}}/>
+          </div>
           <div className="small-icon">
-            <Icon type="fast-forward" />
+            <Icon type="fast-forward" onClick={()=>{nextPlay(play.id)}}/>
           </div>
         </div>
 
         <div>
-          列表
+          <div className="d-f inventory c-p">
+            <span>列表</span>
+            <Icon type="menu-unfold" className="menu-unfold"/>
+            <span>{pList.length}</span>
+          </div>
         </div>
       </div>
- 
     </div>
   )
 }

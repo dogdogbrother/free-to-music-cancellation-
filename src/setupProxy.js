@@ -4,8 +4,7 @@ const proxy = require('http-proxy-middleware')
 
 module.exports = function(app) {
   app.use(proxy('/qpi', { 
-    // target: 'https://bird.ioliu.cn/v1?url=https://c.y.qq.com/',
-    target: 'https://c.y.qq.com/',
+    target: 'https://bird.ioliu.cn/v2?url=https://',
     changeOrigin:true,
     pathRewrite: {
       "^/qpi": "/"
