@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import { Typography, Input, Radio  } from 'antd';
 import './style.scss'
 import { withRouter } from "react-router-dom";
+const { Title, Paragraph, Text } = Typography
 const DefaultSearchPage = ()=> {
   const { Search } = Input;
   const [platform, setPlatform] = useState(0);
@@ -41,12 +42,16 @@ const DefaultSearchPage = ()=> {
         <div className="m-b-20">
           <SearchButton/>
         </div>
-        <div>
+        <div className="m-b-20">
           <Radio.Group defaultValue={platform} buttonStyle="solid" onChange={(evnt)=>{setPlatform(evnt.target.value)}}>
             <Radio.Button value={0}>QQ音乐</Radio.Button>
             <Radio.Button value={1}>网易云音乐</Radio.Button>
             <Radio.Button value={2} disabled>林悦台</Radio.Button>
           </Radio.Group>
+        </div>
+        <div>
+          { platform === 0 && <QqExplain/> }
+          { platform === 1 && <WyExplain/> }
         </div>
       </div>
     </div>
@@ -57,7 +62,6 @@ const DefaultSearchPage = ()=> {
  * 搜索页面的介绍组件
  */
 const Presentation = ()=> {
-  const { Title, Paragraph, Text } = Typography
   return(
     <div className="presentation">
       <div>
@@ -78,4 +82,25 @@ const Presentation = ()=> {
 /**
  *搜索页面的搜索功能组件
  */
+const QqExplain = () => {
+  return(
+    <div>
+      <Title level={2}>QQ音乐的说明</Title>
+      <Paragraph>
+        你有可能会<Text strong> 播放失败 </Text>是因为有些曲目因为版权问题无法找到资源,暂时这样,后面我再想办法优化.如果你发现播放失败,请在播放列表中删除它吧
+      </Paragraph>
+    </div>
+  )
+}
+const WyExplain = () => {
+  return(
+    <div>
+      <Title level={2}>网易云音乐的说明</Title>
+      <Paragraph>
+        相比较恶心的QQ音乐,网易云的接口就很友好了,github上有nodeJS版本的API,绝大功能都有,如果你需要网易云音乐的一些功能,请<Text strong> 私聊我 </Text>或是在<Text strong> 我要提意见 </Text>里面提出
+      </Paragraph>
+    </div>
+  )
+}
+
 export default DefaultSearchPage
