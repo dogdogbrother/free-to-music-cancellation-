@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from "react-router-dom";
 import axios from 'axios'
 import SongList from '../../components/song-list'
-// import '../../common/song-list-style.scss'
 const WySearchResult = (props) => {
   const [songList, setSongList] = useState([]); //歌曲列表数据
   useEffect(()=>{

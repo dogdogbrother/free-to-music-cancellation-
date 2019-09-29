@@ -4,7 +4,7 @@ export const currentPlay = new BehaviorSubject({
   url:'',
   img:'',
   name:'',
-  art:'',
+  art:'', //歌手
   id:'',
 })
 

@@ -20,10 +20,6 @@ const QQsearchResult = (props) => {
           id:item.mid
         }
       }))
-      // let str = res.data.slice(9)
-      // str = str.slice(0,str.length-1)
-      // let data = JSON.parse(str)
-      // setSongList(data.data.song.list)
     })
   },[])
   return(

@@ -25,6 +25,7 @@ const SongList = ({listData})=>{
     const isExist = playList.value.find(item=>item.id===song.id)
     if (isExist) return setCurrentPlay(isExist)
     if (song.source === 'qq') return getQqUrl(song,action)
+    if (song.source === 'sl') return getSlUrl(song,action)
     getWyUrl(song,action)
   }
   const getQqUrl = (song,action) => {
@@ -68,6 +69,24 @@ const SongList = ({listData})=>{
         name:song.name,
         img:'',
       })
+    })
+  }
+  const getSlUrl = (song,action) => {
+    if (!action) {
+      setCurrentPlay({
+        url:song.url,
+        id:song.id,
+        name:song.name,
+        art:song.art,
+        img:'',//这个没有,qq音乐的要再请求一个接口才有照片的.
+      })
+    }
+    pushPlayList({
+      art:song.art,
+      url:song.url,
+      id:song.id,
+      name:song.name,
+      img:'',
     })
   }
   return(

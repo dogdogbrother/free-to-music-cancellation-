@@ -20,7 +20,7 @@ const DefaultSearchPage = ()=> {
     }else if(platform === 1){
       history.push({ pathname:'wy-search-result', state:{ searchVlue, platform }})
     }else{
-
+      history.push({ pathname:'sl-search-result', state:{ searchVlue, platform }})
     }
     
   }
@@ -46,7 +46,7 @@ const DefaultSearchPage = ()=> {
           <Radio.Group defaultValue={platform} buttonStyle="solid" onChange={(evnt)=>{setPlatform(evnt.target.value)}}>
             <Radio.Button value={0}>QQ音乐</Radio.Button>
             <Radio.Button value={1}>网易云音乐</Radio.Button>
-            <Radio.Button value={2} disabled>林悦台</Radio.Button>
+            <Radio.Button value={2}>林悦台</Radio.Button>
           </Radio.Group>
         </div>
         <div>
