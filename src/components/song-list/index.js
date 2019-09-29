@@ -29,11 +29,8 @@ const SongList = ({listData})=>{
   }
   const getQqUrl = (song,action) => {
     // qq音乐的实在是麻烦了,先用mid(id)申请个接口,接口里面有一个purl,拿到这个再拼接一下才能拿到真正播放地址
-    let urlData = JSON.stringify({"req":{"module":"CDN.SrfCdnDispatchServer","method":"GetCdnDispatch","param":{"guid":"109711786","calltype":0,"userip":""}},"req_0":{"module":"vkey.GetVkeyServer","method":"CgiGetVkey","param":{"guid":"109711786","songmid":[song.id],"songtype":[0],"uin":"0","loginflag":1,"platform":"20"}},"comm":{"uin":0,"format":"json","ct":24,"cv":0}})
-    let url = '/qpi/v2?url=https://u.y.qq.com/cgi-bin/musicu.fcg?-=getplaysongvkey5359184408452244&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0&data=' + urlData
-    axios.get(url).then(res=>{
-      // 真正的歌曲的url在这呢,注意ip地址会经常换的
-      let url = 'http://122.226.161.25/amobile.music.tc.qq.com/'+res.data.req_0.data.midurlinfo[0].purl;
+    axios.get(`/qpi/songUrl?id=${song.id}`).then(res=>{
+      let url = 'http://122.226.161.25/amobile.music.tc.qq.com/'+res.data.req_0.data.midurlinfo[0].purl
       //拿到了播放地址,要做两个操作.一个是切换当前播放歌曲,二是push进播放列表 
       if (!action) {     
         setCurrentPlay({
