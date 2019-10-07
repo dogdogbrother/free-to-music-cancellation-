@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import { Icon } from 'antd';
 import './style.scss'
@@ -43,6 +43,15 @@ const Aside = ({ test })=> {
                 <Icon type="desktop" />
                 <span>本地和下载</span>  
               </li>
+              <Route
+                children={(match)=>(
+                  <li className={match.location.pathname === '/upload-song' ? 'aside-active' : ''}>
+                    <Link to="/upload-song">
+                      <Icon type="upload"/><span>上传歌曲</span>
+                    </Link>
+                  </li>
+                )}>
+              </Route>
             </ul>
           </div>
           <div>
