@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Icon, Input, Button, message } from 'antd'
 import axios from 'axios'
-import { setLoginStatus } from '../../rxStore/user'
+import { setLoginStatus, updateUserInfo } from '../../rxStore/user'
 
 import './style.scss'
 
@@ -16,8 +16,8 @@ const Login = (props)=> {
           axios.post(`/spi/login`, values).then(res => {
             hide()
             message.success('登陆成功');
-            const totken = res.data.token
             setLoginStatus(false)
+            updateUserInfo({ ...res.data.user, loginStatus: true })
           }).catch(error => {
             hide()
             message.error(error.response.data)
@@ -25,6 +25,7 @@ const Login = (props)=> {
         }else{
           const hide = message.loading('正在注册...', 0);
           axios.post(`/spi/register`, values).then(res => {
+            hide()
             message.success('注册成功,请登录')
             values.username = ''
             values.password = ''

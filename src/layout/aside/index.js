@@ -1,19 +1,31 @@
 import React, { useState } from 'react'
 import { Route, Link } from 'react-router-dom'
 import { Icon } from 'antd';
-import { setLoginStatus } from '../../rxStore/user'
+import { useObservable } from 'rxjs-hooks'
+import { setLoginStatus, userInfo } from '../../rxStore/user'
 
 import './style.scss'
 
 const Aside = ()=> {
   // const [state, setState] = useState(false)
+  let cUserInfo = useObservable(() => userInfo.asObservable()) || userInfo
+  console.log(cUserInfo);
+  
   const loginOpration = () => {
     setLoginStatus({ status: true })
   }
   return(
     <div className="layout-aside-box p-20">
       <h1 className="logo-module">
-        <span className="c-p" onClick={ () => { loginOpration() } }>请登录</span>
+      {
+        cUserInfo.loginStatus ?
+          <div className="use-info-box">
+            <span>我这里是头像</span>
+          </div>
+        :
+          <span className="c-p" onClick={ () => { loginOpration() } }>请登录</span>
+      
+      }
       </h1>
         <div>
           <p className="menu-title">在线音乐</p>

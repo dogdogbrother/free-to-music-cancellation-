@@ -9,7 +9,7 @@ export const currentPlay = new BehaviorSubject({
 })
 
 export const setCurrentPlay = (obj)=>{ 
-  let play = currentPlay.value;
+  let play = currentPlay.value
   currentPlay.next({
     ...play,
     ...obj
