@@ -9,6 +9,7 @@
 import React from 'react'
 import Aside from './aside'
 import LayoutMain from './main'
+import Login from '../components/login'
 import AudioPlay from '../components/audio-play'
 import { BrowserRouter as Router } from 'react-router-dom'
 
@@ -24,6 +25,7 @@ const Layout = () => {
       <section className="layout-footer">
         <AudioPlay />
       </section>
+      <Login />
     </Router>
   )
 }
