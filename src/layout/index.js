@@ -12,10 +12,16 @@ import LayoutMain from './main'
 import Login from '../components/login'
 import AudioPlay from '../components/audio-play'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { useObservable } from 'rxjs-hooks'
+import { loginStatus } from '../rxStore/user'
+
 
 import './style.scss'
 
+
 const Layout = () => {
+  let currentLoginStatus = useObservable(() => loginStatus.asObservable()) || loginStatus.status
+  if (!currentLoginStatus) return(<></>)
   return(
     <Router>
       <section className="layout-box">
@@ -25,7 +31,7 @@ const Layout = () => {
       <section className="layout-footer">
         <AudioPlay />
       </section>
-      <Login />
+      { currentLoginStatus.status ? <Login /> : '' }
     </Router>
   )
 }

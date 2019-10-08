@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, Link } from 'react-router-dom'
 import { Icon } from 'antd';
+import { setLoginStatus } from '../../rxStore/user'
+
 import './style.scss'
 
-const Aside = ({ test })=> {
+const Aside = ()=> {
+  // const [state, setState] = useState(false)
+  const loginOpration = () => {
+    setLoginStatus({ status: true })
+  }
   return(
     <div className="layout-aside-box p-20">
       <h1 className="logo-module">
-        <span>请登录</span>
+        <span className="c-p" onClick={ () => { loginOpration() } }>请登录</span>
       </h1>
         <div>
           <p className="menu-title">在线音乐</p>

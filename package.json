@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ali-oss": "^6.1.1",
     "antd": "^3.23.2",
     "axios": "^0.19.0",
     "http-proxy-middleware": "^0.20.0",

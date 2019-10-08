@@ -17,4 +17,11 @@ module.exports = function(app) {
       "^/wpi": "/"
     }
   }))
+  app.use(proxy('/spi', {   // spi 的s就是森林的意思,我自己的接口
+    target: 'http://localhost:3030/',
+    changeOrigin:true,
+    pathRewrite: {
+      "^/spi": "/"
+    }
+  }))
 }
