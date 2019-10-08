@@ -52,6 +52,7 @@ const DefaultSearchPage = ()=> {
         <div>
           { platform === 0 && <QqExplain/> }
           { platform === 1 && <WyExplain/> }
+          { platform === 2 && <SlExplain/> }
         </div>
       </div>
     </div>
@@ -98,6 +99,17 @@ const WyExplain = () => {
       <Title level={2}>网易云音乐的说明</Title>
       <Paragraph>
         相比较恶心的QQ音乐,网易云的接口就很友好了,github上有nodeJS版本的API,绝大功能都有,如果你需要网易云音乐的一些功能,请<Text strong> 私聊我 </Text>或是在<Text strong> 我要提意见 </Text>里面提出
+      </Paragraph>
+    </div>
+  )
+}
+const SlExplain = () => {
+  return(
+    <div>
+      <Title level={2}>林悦台的说明</Title>
+      <Paragraph>
+        目前功能是残疾功能,<Text strong> 搜索是假的 </Text>,暂时只提供几首我手写地址的歌,其中周杰伦的歌是非常超清的,30MB左右,会导致播放准备时间比较长,请耐心等待下.
+        后续我会补上数据库,和开放上传接口.
       </Paragraph>
     </div>
   )
