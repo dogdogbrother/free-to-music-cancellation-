@@ -31,6 +31,7 @@ const Login = (props)=> {
           }
           http({
             method:'post',
+            url:'/spi/register',
             parm:values
           }).then(res=>{
             message.success('注册成功,请登录')

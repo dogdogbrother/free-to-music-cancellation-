@@ -50,10 +50,19 @@ const Aside = ()=> {
           <div>
             <p className="menu-title">我的音乐</p>
             <ul>
-              <li>
+            <Route
+              children={(match)=>(
+                <li className={match.location.pathname === '/wy-like' ? 'aside-active' : ''}>
+                  <Link to="/my-like">
+                    <Icon type="heart"/><span>我的喜欢 ({ cUserInfo.fonds ? cUserInfo.fonds.length : ''})</span>
+                  </Link>
+                </li>
+              )}>
+            </Route>
+              {/* <li>
                 <Icon type="heart"/>
-                <span>我的喜欢</span>
-              </li>
+                <span>我的喜欢 ({ cUserInfo.fonds ? cUserInfo.fonds.length : ''})</span>
+              </li> */}
               <li>
                 <Icon type="desktop" />
                 <span>本地和下载</span>  

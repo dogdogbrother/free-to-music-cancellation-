@@ -23,6 +23,7 @@ const Layout = () => {
   if (!currentLoginStatus) return(<></>)
   http({
     url:'/spi/user/info',
+    loding:'正在获取个人信息'
   }).then(res=>{
     updateUserInfo({ ...res, loginStatus: true })
   })

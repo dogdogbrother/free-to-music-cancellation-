@@ -15,10 +15,14 @@
 import React from 'react'
 import { Row, Col, Icon, Tooltip } from 'antd'
 import axios from 'axios'
+import { useObservable } from 'rxjs-hooks'
+import http from '../../api'
 import { setCurrentPlay, playList, pushPlayList } from '../../rxStore/playRx'
+import { userInfo, addUserFonds, updateUserFonds } from '../../rxStore/user'
 import './style.scss'
 
 const SongList = ({listData})=>{
+  let cUserInfo = useObservable(() => userInfo.asObservable()) || userInfo
   const playSong = (song,action) => {
     //在申请网络接口前,我们要先判断下播放列表中是否有了这首歌,有的话就播放这个首歌,不要请求接口
     const isExist = playList.value.find(item=>item.id===song.id)
@@ -88,8 +92,29 @@ const SongList = ({listData})=>{
       img:'',
     })
   }
+  //这个函数是说，点击喜欢，即刻点亮红心，发送请求，其实就是把id，url什么的song信息给存到后端的个人信息的数组里面去
   const like = (item)=>{
-    console.log(item)
+    http({
+      url:'/spi/user/likesong',
+      method:'post',
+      parm:item,
+      loding:'正在喜欢中...'
+    }).then(res=>{
+      //更新全局的info信息
+      addUserFonds(res)
+    })
+  }
+  //已经点了喜欢的歌曲，再点击就是不喜欢了
+  const dislike = (item) => {
+    http({
+      url:'/spi/user/dislikesong',
+      method:'post',
+      parm:item,
+      loding:'正在不喜欢...'
+    }).then(res=>{
+      //更新全局的info.fonds信息
+      updateUserFonds(res)
+    })
   }
   return(
     <ul className="song-list">
@@ -107,7 +132,11 @@ const SongList = ({listData})=>{
             <li className="song" key={index}>
               <Row>
                 <Col span={9} className="d-f">
-                  <Icon type="heart" className="m-r-5 c-p collect-icon" onClick={ ()=>{ like(song) } }/>
+                  {
+                    cUserInfo.fonds.find(item=>item.id===song.id) ?
+                    <div><Icon type="heart" theme="filled" className="m-r-5 c-p" onClick={ ()=>{ dislike(song, true) } }/></div> :
+                    <Icon type="heart" className="m-r-5 c-p collect-icon" onClick={ ()=>{ like(song, true) } }/>
+                  }
                   <div className="song-name">
                     <span className="m-r-5 c-p ellipsis">{song.name}</span>
                   </div>

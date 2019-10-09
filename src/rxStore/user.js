@@ -20,10 +20,31 @@ export const userInfo = new BehaviorSubject({
   _id:''
 })
 
+// 单纯的更新个人信息资料
 export const updateUserInfo = (obj) => {
   let value = userInfo.value
   userInfo.next({
     ...value,
     ...obj
+  })
+}
+
+//就是添加我的喜欢的歌曲
+export const addUserFonds = (obj) => {
+  let value = userInfo.value
+  if(!value.fonds.find(item=>item.id===obj.id)){
+    value.fonds.push(obj)
+    userInfo.next({
+      ...value,
+    })
+  }
+}
+
+//这个其实是delete，但是操作的方式是全部替换，所以叫做 update
+export const updateUserFonds = (songArr) => {
+  let value = userInfo.value
+  value.fonds = songArr
+  userInfo.next({
+    ...value,
   })
 }
