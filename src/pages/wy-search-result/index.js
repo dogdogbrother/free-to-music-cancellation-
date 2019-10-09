@@ -30,15 +30,5 @@ const WySearchResult = (props) => {
     </div>
   )
 }
-const setFormat = (number,type) => {
-  let res = null
-  if (type === 'minute') {
-    res = Math.floor((number%3600000)/60000)
-  }else{
-    res = Math.floor((number%60000)/1000)
-  }
-  if (res<10) return res = '0' + res
-  return res
-}
 const WySearchResultRouter = withRouter(WySearchResult);
 export default WySearchResultRouter

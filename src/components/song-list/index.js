@@ -19,7 +19,6 @@ import { setCurrentPlay, playList, pushPlayList } from '../../rxStore/playRx'
 import './style.scss'
 
 const SongList = ({listData})=>{
-
   const playSong = (song,action) => {
     //在申请网络接口前,我们要先判断下播放列表中是否有了这首歌,有的话就播放这个首歌,不要请求接口
     const isExist = playList.value.find(item=>item.id===song.id)
@@ -89,6 +88,9 @@ const SongList = ({listData})=>{
       img:'',
     })
   }
+  const like = (item)=>{
+    console.log(item)
+  }
   return(
     <ul className="song-list">
       <li className="title">
@@ -105,7 +107,7 @@ const SongList = ({listData})=>{
             <li className="song" key={index}>
               <Row>
                 <Col span={9} className="d-f">
-                  <Icon type="heart" className="m-r-5 c-p collect-icon"/>
+                  <Icon type="heart" className="m-r-5 c-p collect-icon" onClick={ ()=>{ like(song) } }/>
                   <div className="song-name">
                     <span className="m-r-5 c-p ellipsis">{song.name}</span>
                   </div>

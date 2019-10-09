@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Icon, Input, Button, message } from 'antd'
 import axios from 'axios'
+import http from '../../api'
 import { setLoginStatus, updateUserInfo } from '../../rxStore/user'
 
 import './style.scss'
@@ -12,31 +13,35 @@ const Login = (props)=> {
     props.form.validateFields((err, values) => {
       if (!err) {
         if (isLogin) {  //假如 isLogin 是true,就代表是登陆,否则就是注册
-          const hide = message.loading('正在登陆...', 0);
-          axios.post(`/spi/login`, values).then(res => {
-            hide()
+          http({
+            method:'post',
+            url:'/spi/login',
+            parm:values,
+            loding:'登陆中'
+          }).then(res=>{
             message.success('登陆成功');
             setLoginStatus(false)
-            updateUserInfo({ ...res.data.user, loginStatus: true })
-          }).catch(error => {
-            hide()
-            message.error(error.response.data)
+            updateUserInfo({ ...res.user, loginStatus: true })
+          }).catch( error => {
+            message.error('账号密码错误')
           })
         }else{
-          const hide = message.loading('正在注册...', 0);
-          axios.post(`/spi/register`, values).then(res => {
-            hide()
+          if (values.password !== values.affirmPassword) {
+            return message.error('密码不一致,请检查')
+          }
+          http({
+            method:'post',
+            parm:values
+          }).then(res=>{
             message.success('注册成功,请登录')
-            values.username = ''
+            values.name = ''
             values.password = ''
             values.affirmPassword = ''
             setIsLogin(true)
-          }).catch(error=>{
-            hide()
-            message.error(error.response.data)
+          }).catch(err=>{
+            message.error('注册失败')
           })
         }
-        
       }
     });
   }
@@ -53,12 +58,12 @@ const Login = (props)=> {
           <div className="login">
             <Form onSubmit={handleSubmit} className="login-form">
               <Form.Item>
-                {getFieldDecorator('username', {
+                {getFieldDecorator('name', {
                   rules: [{ required: true, message: '用户名不能为空' }],
                 })(
                   <Input
                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    placeholder="Username"
+                    placeholder="name"
                   />
                 )}
               </Form.Item>
@@ -87,7 +92,7 @@ const Login = (props)=> {
           <div className="register">
             <Form onSubmit={handleSubmit} className="login-form">
               <Form.Item>
-                {getFieldDecorator('username', {
+                {getFieldDecorator('name', {
                   rules: [{ required: true, message: '用户名不能为空' }],
                 })(
                   <Input

@@ -15,17 +15,16 @@ import Login from '../components/login'
 import AudioPlay from '../components/audio-play'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { useObservable } from 'rxjs-hooks'
-import { loginStatus } from '../rxStore/user'
-import axios from 'axios'
-
+import { loginStatus, updateUserInfo } from '../rxStore/user'
+import http from '../api/index'
 import './style.scss'
-
-
 const Layout = () => {
   let currentLoginStatus = useObservable(() => loginStatus.asObservable()) || loginStatus.status
   if (!currentLoginStatus) return(<></>)
-  axios.get('/spi/user/info').then(res => {
-    
+  http({
+    url:'/spi/user/info',
+  }).then(res=>{
+    updateUserInfo({ ...res, loginStatus: true })
   })
   return(
     <Router>

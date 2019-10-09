@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import { Icon } from 'antd';
 import { useObservable } from 'rxjs-hooks'
@@ -9,8 +9,6 @@ import './style.scss'
 const Aside = ()=> {
   // const [state, setState] = useState(false)
   let cUserInfo = useObservable(() => userInfo.asObservable()) || userInfo
-  console.log(cUserInfo);
-  
   const loginOpration = () => {
     setLoginStatus({ status: true })
   }
@@ -20,11 +18,10 @@ const Aside = ()=> {
       {
         cUserInfo.loginStatus ?
           <div className="use-info-box">
-            <span>我这里是头像</span>
+            <span>我是{cUserInfo.name}用户</span>
           </div>
         :
           <span className="c-p" onClick={ () => { loginOpration() } }>请登录</span>
-      
       }
       </h1>
         <div>
