@@ -79,7 +79,7 @@ const AudioPlay = ()=>{
       <div className="play-footer-main d-f-b">
         <div className="song-content d-f">
           <div className="img-box">
-            <img src="//y.gtimg.cn/music/photo_new/T001R150x150M0000025NhlN2yWrP4.jpg?max_age=2592000"/> 
+            <img src="//y.gtimg.cn/music/photo_new/T001R150x150M0000025NhlN2yWrP4.jpg?max_age=2592000" alt="歌手头像"/> 
           </div>
           <div className="song-info">
             <p className="info">

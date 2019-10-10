@@ -21,7 +21,7 @@ const WySearchResult = (props) => {
         }))
       }
     })
-  },[])
+  },[props.location.state])
   return(
     <div className="song-list">
       <div className="res-container">

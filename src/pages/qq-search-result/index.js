@@ -21,7 +21,7 @@ const QQsearchResult = (props) => {
         }
       }))
     })
-  },[])
+  },[props.location.state])
   return(
     <div className="song-list">
       {/* 这里应该是个tabs页,然后点击歌曲就显示歌曲结果,点击歌手就显示搜索歌手的结果*/}

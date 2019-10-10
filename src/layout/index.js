@@ -8,7 +8,7 @@
  * 
  * 除了布局之外，这个根组件页面还承担着axios请求个人信息的功能
  */
-import React from 'react'
+import React, { useEffect } from 'react'
 import Aside from './aside'
 import LayoutMain from './main'
 import Login from '../components/login'
@@ -20,13 +20,18 @@ import http from '../api/index'
 import './style.scss'
 const Layout = () => {
   let currentLoginStatus = useObservable(() => loginStatus.asObservable()) || loginStatus.status
+  useEffect(()=>{
+    http({
+      url:'/spi/user/info',
+      loding:'正在获取个人信息'
+    }).then(res=>{
+      updateUserInfo({ ...res, loginStatus: true })
+    })
+  },[])
+
   if (!currentLoginStatus) return(<></>)
-  http({
-    url:'/spi/user/info',
-    loding:'正在获取个人信息'
-  }).then(res=>{
-    updateUserInfo({ ...res, loginStatus: true })
-  })
+  
+  
   return(
     <Router>
       <section className="layout-box">

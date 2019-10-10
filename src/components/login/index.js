@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Form, Icon, Input, Button, message } from 'antd'
-import axios from 'axios'
 import http from '../../api'
 import { setLoginStatus, updateUserInfo } from '../../rxStore/user'
 
