@@ -6,7 +6,8 @@ class Http {
     return new Promise((resolve, reject) => {
       const hide = message.loading(loding, 0);
       if (document.cookie) {
-        let token = document.cookie.split('=')[1]
+        // 这个地方拿到cokie中的token值,再赋值到 Authorization 头中
+        let token = document.cookie.split('oken=')[1]
         axios.defaults.headers.common["Authorization"] = 'Bearer ' + token;
       }
       axios({
