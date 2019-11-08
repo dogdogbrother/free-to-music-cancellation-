@@ -1,64 +1,146 @@
-import React from 'react'
-import { Button } from 'antd';
-// import OSS from 'ali-oss'
-import axios from 'axios'
+import React, { useState } from 'react'
+import { Upload, message, Button, Icon, Form, Input } from 'antd';
 
+import http from '../../api'
 import './style.scss'
 
-const SongMenu = ()=> {
+const UpdataSong = (props)=> {
 
-  
-  const updateFn = async (val)=> {
-    //先处理文件问题，得到数据的名字和内容
+  const [ imageUrl, setImageUrl ] = useState(null);
+  const [ loading, setLoading ] = useState(false);
+  const [ songPath, setSongPath ] = useState(null);
 
+  const updateProps = {
+    name: 'file',
+    action: 'spi/music/updatesong',
+    headers: {
+      Authorization: 'Bearer ' + document.cookie.split('oken=')[1]
+    },
+    accept:'.mp3,.flac,.wma',
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        setSongPath(info.file.response.data)
+      } else if (info.file.status === 'error') {
+        setSongPath(null)
+      }
+    },
+  };
 
-    
-
-
-    let file = val.target.files[0];
-    var fd = new FormData();
-    fd.append('file', file);
-    axios({
-      url:'/spi/user/updatesong',
-      method:'post',
-      data:fd,
-    }).then(res=>{
-      console.log(res);
-      console.log('测试是否上传成功了');
-    })
-
-    // let reader = new FileReader()
-    // reader.readAsArrayBuffer(file)
-    // let blob = null
-
-    // reader.onload = (e) => {
-    //   console.log('??')
-    //   if (typeof e.target.result === 'object') {
-    //     blob = new Blob([e.target.result])
-    //   } else {
-    //     blob = e.target.result
-    //   }
-    // }
-
-
-
-
-
-    
-
-
+  function getBase64(img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
   }
-  return(
-    <div className="update-page">
-      <label htmlFor="fileinp" >
-        <Button type="primary" shape="round" icon="upload" size="large">请选择歌曲进行上传</Button>
-        <input type="file" name="" id="fileinp" onChange={ (val)=>{ updateFn(val) } }/>
-      </label>
+  
+  const handleChange = info => {
+    if (info.file.status === 'uploading') {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, imageUrl =>{
+        setImageUrl(imageUrl)
+        setLoading(true);
+      });
+    }
+  };
+  
+  const handleSubmit = e =>{
+    e.preventDefault();
+    props.form.validateFields((err, values) => {
+      if (!err) {
+        if (!songPath) return message.error(`请先上传歌曲!`);
+        http({
+          method:'post',
+          url:'/spi/music/updatemusic',
+          parm:{ ...values, songPath},
+          loding:'上传中'
+        }).then(res=>{
+          message.success('上传成功');
+        }).catch( error => {
+          message.error('上传失败')
+        })
+      }
+    })
+  }
+  const { getFieldDecorator } = props.form
+
+  const uploadButton = (
+    <div>
+      <Icon type={loading ? 'loading' : 'plus'} />
+      <div className="ant-upload-text">Upload</div>
     </div>
   )
+
+  return(
+    <div className="update-page">
+      
+      <Form onSubmit={handleSubmit}>
+        <Form.Item>
+          <Upload {...updateProps}>
+            <Button>
+              <Icon type="upload" />上传歌曲
+            </Button>
+          </Upload>
+        </Form.Item>
+        <Form.Item>
+          <Upload
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            onChange={handleChange}
+          >
+            {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+          </Upload>
+        </Form.Item>
+        <Form.Item>
+          {getFieldDecorator('songName', {
+            rules: [{ required: true, message: '歌曲不能为空' }],
+          })(
+            <Input
+              prefix={<Icon type="customer-service" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="歌曲名称"
+            />
+          )}
+        </Form.Item>
+        <Form.Item>
+          {getFieldDecorator('author', {
+            rules: [{ required: true, message: '歌手不能为空' }],
+          })(
+            <Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="歌手"
+            />
+          )}
+        </Form.Item>
+        <Form.Item>
+          {getFieldDecorator('describe')(
+            <Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="歌曲描述"
+            />
+          )}
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">登录</Button>
+        </Form.Item>
+      </Form>
+    </div>
+  )
+  
 }
 
-export default SongMenu
+
+
+const WrappedUpdate = Form.create({ name: 'update_song' })(UpdataSong);
+
+export default WrappedUpdate
 
 
 
