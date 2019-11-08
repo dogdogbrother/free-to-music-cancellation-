@@ -7,7 +7,7 @@ const SlSearchResult = (props) => {
   const [songList, setSongList] = useState([]); //歌曲列表数据
   useEffect(()=>{
     // let pathState = props.location.state
-    axios.get(`/qpi/senlin`)
+    axios.get(`/spi/music/songlist`)
     .then(res=>{
       setSongList(res.data.songList.map(item=>{
         return {

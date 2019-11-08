@@ -25,6 +25,8 @@ const Layout = () => {
       url:'/spi/user/info',
       loding:'正在获取个人信息'
     }).then(res=>{
+      console.log(res);
+      
       updateUserInfo({ ...res, loginStatus: true })
     })
   },[])

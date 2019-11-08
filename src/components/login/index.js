@@ -20,7 +20,7 @@ const Login = (props)=> {
           }).then(res=>{
             message.success('登陆成功');
             setLoginStatus(false)
-            updateUserInfo({ ...res.user, loginStatus: true })
+            updateUserInfo({ ...res, loginStatus: true })
           }).catch( error => {
             message.error('账号密码错误')
           })
