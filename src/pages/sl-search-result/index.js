@@ -6,22 +6,23 @@ import SongList from '../../components/song-list'
 const SlSearchResult = (props) => {
   const [songList, setSongList] = useState([]); //歌曲列表数据
   useEffect(()=>{
-    // let pathState = props.location.state
-    axios.get(`/spi/music/songlist`)
+    let pathState = props.location.state
+    axios.get(`/spi/music/searchsong?keywords=${pathState.searchVlue}`)
     .then(res=>{
-      setSongList(res.data.songList.map(item=>{
+      setSongList(res.data.map(item=>{
         return {
-          name:item.name,
-          art:item.art,
+          name:item.songName,
+          art:item.author,
           album:'',
           duration:0,
           source:'sl',
-          id:item.id,
-          url:item.url
+          id:item._id,
+          url:item.songUrl,
+          img:item.coverUrl
         }
       }))
     })
-  },[])
+  },[props.location.state])
   return(
     <div className="song-list">
       {/* 这里应该是个tabs页,然后点击歌曲就显示歌曲结果,点击歌手就显示搜索歌手的结果*/}

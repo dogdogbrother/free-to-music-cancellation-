@@ -3,51 +3,67 @@ import { Upload, message, Button, Icon, Form, Input } from 'antd';
 
 import http from '../../api'
 import './style.scss'
+import { log } from 'util';
 
 const UpdataSong = (props)=> {
 
   const [ imageUrl, setImageUrl ] = useState(null);
   const [ loading, setLoading ] = useState(false);
-  const [ songPath, setSongPath ] = useState(null);
+  const [ songPath, setSongPath ] = useState(null); 
+  const [ coverPath, setCoverPath ] = useState('');
 
+  const Authorization = 'Bearer ' + document.cookie.split('oken=')[1];
+  
   const updateProps = {
     name: 'file',
     action: 'spi/music/updatesong',
     headers: {
-      Authorization: 'Bearer ' + document.cookie.split('oken=')[1]
+      Authorization
     },
     accept:'.mp3,.flac,.wma',
     onChange(info) {
       if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
+        setSongPath(null)
       }
       if (info.file.status === 'done') {
-        setSongPath(info.file.response.data)
+        setSongPath(info.file.response.data.path)
       } else if (info.file.status === 'error') {
         setSongPath(null)
       }
     },
   };
 
+  const updateImage = {
+    name:"avatar",
+    listType:"picture-card",
+    className:"avatar-uploader",
+    showUploadList:false,
+    action:"/spi/music/updatecover",
+    accept:'.jpg,.jpeg,.png',
+    headers: {
+      Authorization
+    },
+    onChange:info => {
+      if (info.file.status === 'uploading') {
+        setLoading(true);
+        setCoverPath('');
+        return;
+      }
+      if (info.file.status === 'done') {
+        setCoverPath(info.file.response.data)
+        getBase64(info.file.originFileObj, imageUrl =>{
+          setImageUrl(imageUrl)
+          setLoading(true);
+        });
+      }
+    }
+  }
+
   function getBase64(img, callback) {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
   }
-  
-  const handleChange = info => {
-    if (info.file.status === 'uploading') {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl =>{
-        setImageUrl(imageUrl)
-        setLoading(true);
-      });
-    }
-  };
   
   const handleSubmit = e =>{
     e.preventDefault();
@@ -57,7 +73,7 @@ const UpdataSong = (props)=> {
         http({
           method:'post',
           url:'/spi/music/updatemusic',
-          parm:{ ...values, songPath},
+          parm:{ ...values, songPath, coverPath},
           loding:'上传中'
         }).then(res=>{
           message.success('上传成功');
@@ -88,14 +104,7 @@ const UpdataSong = (props)=> {
           </Upload>
         </Form.Item>
         <Form.Item>
-          <Upload
-            name="avatar"
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            onChange={handleChange}
-          >
+          <Upload {...updateImage}>
             {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
           </Upload>
         </Form.Item>
