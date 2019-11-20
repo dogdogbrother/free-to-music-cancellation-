@@ -1,29 +1,49 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
-import { Icon } from 'antd';
+import { Icon, Avatar, Popover, message } from 'antd';
 import { useObservable } from 'rxjs-hooks'
-import { setLoginStatus, userInfo } from '../../rxStore/user'
+import { setLoginStatus, userInfo, resetUserInfo } from '../../rxStore/user'
 
 import './style.scss'
 
 const Aside = ()=> {
   // const [state, setState] = useState(false)
   let cUserInfo = useObservable(() => userInfo.asObservable()) || userInfo
-  const loginOpration = () => {
+
+  const loginOpration = () => { // 打开登陆卡片
     setLoginStatus({ status: true })
   }
+  
+  const signOut = () => { // 退出登陆,清除cookie和重置登陆信息
+    document.cookie = 'token = expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+    resetUserInfo()
+    message.success('已退出');
+  }
+  const infoPopover = (
+    <ul className="infoPopover">
+      <li>个人中心</li>
+      <li>账号设置</li>
+      <li onClick={() => { signOut() }}>退出</li>
+    </ul>
+  )
   return(
     <div className="layout-aside-box p-20">
-      <h1 className="logo-module">
       {
         cUserInfo.loginStatus ?
-          <div className="use-info-box">
-            <span>我是{cUserInfo.name}用户</span>
+        <div style={{textAlign: 'center'}} className="m-b-5">
+          <div>
+            <Popover placement="bottomLeft" content={infoPopover} trigger="hover" className="m-b-5 c-p" >
+              <Avatar size={66} src={cUserInfo.avatar_url}>{cUserInfo.name}</Avatar>
+            </Popover>
           </div>
+          <span>{cUserInfo.name}</span>
+        </div>
+        
         :
-          <span className="c-p" onClick={ () => { loginOpration() } }>请登录</span>
+          <div style={{textAlign: 'center'}}>
+            <Avatar size={66} className="c-p" onClick={() => { loginOpration() }}>singo in</Avatar>
+          </div>
       }
-      </h1>
         <div>
           <p className="menu-title">在线音乐</p>
           <ul>

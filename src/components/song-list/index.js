@@ -33,7 +33,7 @@ const SongList = ({listData})=>{
   }
   const getQqUrl = (song,action) => {
     // qq音乐的实在是麻烦了,先用mid(id)申请个接口,接口里面有一个purl,拿到这个再拼接一下才能拿到真正播放地址
-    axios.get(`/qpi/songUrl?id=${song.id}`).then(res=>{
+    axios.get(`/spi/qq/songUrl?id=${song.id}`).then(res=>{
       let url = 'http://122.226.161.25/amobile.music.tc.qq.com/'+res.data.req_0.data.midurlinfo[0].purl
       //拿到了播放地址,要做两个操作.一个是切换当前播放歌曲,二是push进播放列表 
       if (!action) {     
@@ -131,7 +131,7 @@ const SongList = ({listData})=>{
           return(
             <li className="song" key={index}>
               <Row>
-                <Col span={9} className="d-f">
+                <Col span={9} className="d-f ellipsis">
                   {
                     cUserInfo.fonds.find(item=>item.id===song.id) ?
                     <div><Icon type="heart" theme="filled" className="m-r-5 c-p" onClick={ ()=>{ dislike(song, true) } }/></div> :

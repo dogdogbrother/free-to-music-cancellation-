@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Upload, message, Button, Icon, Form, Input } from 'antd';
+import { Upload, message, Button, Icon, Form, Input, Modal } from 'antd';
 
 import http from '../../api'
 import './style.scss'
-import { log } from 'util';
 
 const UpdataSong = (props)=> {
 
@@ -12,6 +11,8 @@ const UpdataSong = (props)=> {
   const [ songPath, setSongPath ] = useState(null); 
   const [ coverPath, setCoverPath ] = useState('');
 
+  const { confirm } = Modal;
+  
   const Authorization = 'Bearer ' + document.cookie.split('oken=')[1];
   
   const updateProps = {
@@ -28,9 +29,11 @@ const UpdataSong = (props)=> {
       if (info.file.status === 'done') {
         setSongPath(info.file.response.data.path)
       } else if (info.file.status === 'error') {
+        message.error('上传歌曲失败,请检查是否已登陆');
         setSongPath(null)
       }
     },
+
   };
 
   const updateImage = {
@@ -55,6 +58,9 @@ const UpdataSong = (props)=> {
           setImageUrl(imageUrl)
           setLoading(true);
         });
+      }else if (info.file.status === 'error') {
+        message.error('上传图片失败,请检查是否已登陆');
+        setLoading(false);
       }
     }
   }
@@ -70,19 +76,36 @@ const UpdataSong = (props)=> {
     props.form.validateFields((err, values) => {
       if (!err) {
         if (!songPath) return message.error(`请先上传歌曲!`);
-        http({
-          method:'post',
-          url:'/spi/music/updatemusic',
-          parm:{ ...values, songPath, coverPath},
-          loding:'上传中'
-        }).then(res=>{
-          message.success('上传成功');
-        }).catch( error => {
-          message.error('上传失败')
-        })
+        postUpdateMusic(values, false);
       }
     })
   }
+
+  const postUpdateMusic = (values, verify) => {
+    http({
+      method:'post',
+      url:'/spi/music/updatemusic',
+      parm:{ ...values, songPath, coverPath, verify},
+      loding:'上传中'
+    }).then(res=>{
+      if (res.code === 100) {
+        message.success('上传成功');
+      } else if (res.code === 201) {
+        confirm({
+          title: '提示',
+          content: res.msg,
+          onOk() {
+            postUpdateMusic(values, true)
+          },
+        });
+        
+      }
+      
+    }).catch( () => {
+      message.error('上传失败')
+    })
+  }
+
   const { getFieldDecorator } = props.form
 
   const uploadButton = (

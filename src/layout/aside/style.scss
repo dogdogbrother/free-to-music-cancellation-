@@ -1,11 +1,5 @@
+
 .layout-aside-box{
-  .logo-module{
-    box-sizing: border-box;
-    height: 80px;
-    background-color: rgba($color: #000000, $alpha: 0.05);
-    line-height: 80px;
-    text-align: center;
-  }
   .menu-title{
     line-height: 40px;
     text-indent: 5px;
@@ -26,6 +20,7 @@
     }
     i{
       margin: 0 10px 0 10px;
+      
     }
   }
   .aside-active{
@@ -36,5 +31,17 @@
   }
   .aside-active:hover{
     background-color: #31c27c;
+  }
+}
+
+.infoPopover{
+  margin: 0 -10px;
+  li{
+    padding: 5px 20px;
+    cursor: pointer;
+    &:hover{
+      color: #000;
+      background:rgba(40, 40, 40, 0.04);
+    }
   }
 }

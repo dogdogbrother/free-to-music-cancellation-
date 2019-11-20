@@ -3,13 +3,6 @@ const proxy = require('http-proxy-middleware')
 
 
 module.exports = function(app) {
-  app.use(proxy('/qpi', { 
-    target: 'http://49.233.185.168:8080/',
-    changeOrigin:true,
-    pathRewrite: {
-      "^/qpi": "/"
-    }
-  }))
   app.use(proxy('/wpi', { 
     target: 'http://49.233.185.168:3000/',
     changeOrigin:true,

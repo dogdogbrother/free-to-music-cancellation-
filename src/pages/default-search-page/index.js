@@ -72,8 +72,7 @@ const Presentation = ()=> {
           如果因为 <Text mark>版权</Text> 或是 <Text mark>封禁原因</Text> 而搜索不到歌曲或是播放不成功时,可以选择 <Text strong> 林悦台 </Text>试一试.
         </Paragraph>
         <Paragraph>
-          <Text strong> 林悦台 </Text>是我个人的服务器,里面上传了一些百度云下载的音乐,目前已上传的有 <Text underline>周杰伦</Text> 的大部分歌曲, <Text underline>李志</Text> 的全部歌曲.
-          如果后续有时间也同样能力的话,我会写一个上传接口,提供用户自定义上传歌曲.
+          <Text strong> 林悦台 </Text>是我个人的服务器,你可以在<Text strong>上传歌曲</Text>页面去上传歌曲资源,然后就能搜索到了,目前我已经长传了部分的<Text underline>周杰伦</Text> 歌曲,和 <Text underline>李志</Text> 的歌曲.
         </Paragraph>
       </div>
     </div>
@@ -88,7 +87,7 @@ const QqExplain = () => {
     <div>
       <Title level={2}>QQ音乐的说明</Title>
       <Paragraph>
-        你有可能会<Text strong> 播放失败 </Text>是因为有些曲目因为版权问题无法找到资源,暂时这样,后面我再想办法优化.如果你发现播放失败,请在播放列表中删除它吧
+        你有可能会<Text strong> 播放失败 </Text>是因为有些曲目因为版权问题无法找到资源,而且已经可以播放的歌曲链接也会因为时间而KEY值过期,暂时这样,后面我再想办法优化.如果你发现播放失败,请在播放列表中删除它重新播放吧.
       </Paragraph>
     </div>
   )
@@ -108,8 +107,7 @@ const SlExplain = () => {
     <div>
       <Title level={2}>林悦台的说明</Title>
       <Paragraph>
-        目前功能是残疾功能,<Text strong> 搜索是假的 </Text>,暂时只提供几首我手写地址的歌,其中周杰伦的歌是非常超清的,30MB左右,会导致播放准备时间比较长,请耐心等待下.
-        后续我会补上数据库,和开放上传接口.
+        我服务器中的歌都是超清的,例如周杰伦的歌30MB左右,李志的歌20MB左右,这会导致播放准备时间比较长,请耐心等待下.
       </Paragraph>
     </div>
   )

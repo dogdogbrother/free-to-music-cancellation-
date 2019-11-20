@@ -8,7 +8,7 @@ const QQsearchResult = (props) => {
   const [songList, setSongList] = useState([]); 
   useEffect(()=>{
     let pathState = props.location.state
-    axios.get(`/qpi/songList?name=${pathState.searchVlue}`)
+    axios.get(`/qpi/qq/songList?name=${pathState.searchVlue}`)
     .then(res=>{
       setSongList(res.data.data.song.list.map(item=>{
         return {

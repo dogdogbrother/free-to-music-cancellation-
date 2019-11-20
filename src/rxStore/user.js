@@ -17,8 +17,21 @@ export const userInfo = new BehaviorSubject({
   gender:'',
   fonds:[],
   name:'',
-  _id:''
+  _id:'',
+  avatar_url:''
 })
+
+export const resetUserInfo = () => {
+  userInfo.next({
+    loginStatus: false, //默认是未登录状态
+    accountName:'',
+    gender:'',
+    fonds:[],
+    name:'',
+    _id:'',
+    avatar_url:''
+  })
+}
 
 // 单纯的更新个人信息资料
 export const updateUserInfo = (obj) => {
